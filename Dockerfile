@@ -1,5 +1,5 @@
 FROM jenkins/jenkins:lts
-MAINTAINER Pawan Kumar
+MAINTAINER shashank3656
 
 USER root
 RUN apt-get update
