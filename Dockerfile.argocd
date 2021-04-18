@@ -1,4 +1,4 @@
-FROM pawanitzone/jenkins-custom
+FROM shashank3656/jenkins-custom
 MAINTAINER Pawan Kumar
 
 USER root
