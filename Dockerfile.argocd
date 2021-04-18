@@ -1,0 +1,13 @@
+FROM pawanitzone/jenkins-custom
+MAINTAINER Pawan Kumar
+
+USER root
+#Argo CD cli installed
+RUN curl -LO https://github.com/argoproj/argo-cd/releases/download/v1.4.0/argocd-linux-amd64
+RUN mv argocd-linux-amd64 /usr/local/bin/argocd
+RUN chmod 755 /usr/local/bin/argocd
+##If argocd failed to connect from jenkins follow:
+#Login Jenkins pods:
+#argocd login argocd_server-ip
+
+EXPOSE 8080

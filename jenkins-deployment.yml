@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+ template:
+  metadata:
+    name: jenkins
+    labels:
+      app: jenkins
+  spec:
+    containers:
+      - name: jenkins
+        image: pawanitzone/jenkins-argocdcli:v1.4.0
+        imagePullPolicy: Always
+        env:
+          - name: JAVA_OPTS
+            value: -Djenkins.install.runSetupWizard=false
+        ports:
+          - name: http-port
+            containerPort: 8080
+          - name: jnlp-port
+            containerPort: 50000
+        volumeMounts:
+          - name: jenkins-home
+            mountPath: /var/jenkins_home
+          - name: docker-sock-volume
+            mountPath: /var/run/docker.sock
+            
+    volumes:
+    - name: jenkins-home
+      persistentVolumeClaim:
+        claimName: jenkins-pvc
+    - name: docker-sock-volume
+      hostPath:
+        path: /var/run/docker.sock
+        type: File
+
+ replicas: 1
+ selector:
+   matchLabels:
+     app: jenkins

@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins-pv
+spec:
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  persistentVolumeReclaimPolicy: Retain
+  gcePersistentDisk:    #//GKE Volume create
+    pdName: jenkins
+    fsType: ext4
+  #awsElasticBlockStore:                ##AWS volume add
+  # volumeID: vol-0636634f79bee70f4
+  # fsType: ext4
+    
+    
+    
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-pvc
+  
+spec:
+  storageClassName: ""
+  volumeName: jenkins-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
